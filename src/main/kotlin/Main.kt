@@ -7,7 +7,7 @@ fun main() {
     }
 }
 
-fun printForcast() {
+suspend fun printForcast() {
     delay(1000)
     println("Sunny")
 }
