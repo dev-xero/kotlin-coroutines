@@ -1,29 +1,30 @@
 import kotlinx.coroutines.*
 import kotlin.system.*
 
+
 fun main() {
-    val time = measureTimeMillis {
-        runBlocking {
-            println("Weather Forcast")
-            launch {
-                printForcast()
-            }
-
-            launch {
-                printForcast()
-            }
-        }
+    runBlocking {
+        println("Weather Forecast")
+        println(getWeatherReport())
+        println("Have a good day!")
     }
-
-    println("Execution time(seconds): ${time / 1000.0}s")
 }
 
-suspend fun printForcast() {
+suspend fun getTemp(): String {
     delay(1000)
-    println("Sunny")
+    return "30℃"
 }
 
-suspend fun printTemp() {
+suspend fun getForecast(): String {
     delay(1000)
-    println("30℃")
+    return "Sunny"
 }
+
+suspend fun getWeatherReport() = coroutineScope {
+    val forecast = async { getForecast() }
+
+    val temperature = async { getTemp() }
+
+    "${forecast.await()} ${temperature.await()}"
+}
+
