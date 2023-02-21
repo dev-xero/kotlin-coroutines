@@ -11,8 +11,14 @@ fun main() {
 }
 
 suspend fun getTemp(): String {
-    delay(1000)
-    return "30℃"
+    try {
+        delay(1000)
+        throw AssertionError("Temperature is invalid")
+        return "30℃"
+    } catch(e: AssertionError) {
+        println("Error: $e")
+        return "Oops! Couldn't get the temperature!"
+    }
 }
 
 suspend fun getForecast(): String {
